@@ -313,3 +313,22 @@ Started: Building EA Stress Test System from PRD
   - Comprehensive test suite (tests/test_step06_ini.py)
   - All 14 tests passing: success cases, INI content structure, date calculations, report naming, error handling (missing ex5, empty ranges), all fixed/optimized params, custom settings, timeframe conversion, validation, serialization
   - Phase 4 Step 6 complete
+
+## Iteration 17
+- Implemented Step 7: Run Optimization (Pass 1 - Wide) (ea_stress/workflow/steps/step07_optimize.py):
+  - OptimizationResult dataclass with gate checking
+  - run_optimization() function executes MT5 genetic optimization via INI file
+  - Gate: passes_found >= 1 (per PRD Section 3, Step 7)
+  - Uses MT5Tester.run_backtest() with INI file from Step 6
+  - Timeout support (default: OPTIMIZATION_TIMEOUT = 36,000 seconds = 10 hours)
+  - XML report path validation
+  - _count_passes_in_xml() helper for lightweight pass counting (full parsing in Step 8)
+  - Counts <Row> tags in XML to determine number of optimization passes
+  - Returns OptimizationResult with: success, xml_path, passes_found, duration_seconds, error_message, terminal_output, gate_passed
+  - validate_optimization() convenience function (alias for run_optimization)
+  - passed_gate() method for gate evaluation (passes_found >= 1)
+  - to_dict() serialization for JSON persistence
+  - Error handling: INI file not found, terminal execution failure, missing XML, exceptions
+  - Comprehensive test suite (tests/test_step07_optimize.py)
+  - All 16 tests passing: gate pass/fail, successful optimization, INI not found, no XML, terminal failure, gate failure with zero passes, exception handling, custom timeout, data path parameter, XML pass counting (with data, header only, file not found, malformed XML), convenience function validation
+  - Phase 4 Step 7 complete
