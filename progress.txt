@@ -332,3 +332,26 @@ Started: Building EA Stress Test System from PRD
   - Comprehensive test suite (tests/test_step07_optimize.py)
   - All 16 tests passing: gate pass/fail, successful optimization, INI not found, no XML, terminal failure, gate failure with zero passes, exception handling, custom timeout, data path parameter, XML pass counting (with data, header only, file not found, malformed XML), convenience function validation
   - Phase 4 Step 7 complete
+
+## Iteration 18
+- Implemented Step 8: Parse Optimization Results (Pass 1 - Wide) (ea_stress/workflow/steps/step08_parse.py):
+  - ParseResult dataclass with gate checking
+  - parse_optimization_results() function parses MT5 optimization XML from Step 7
+  - Gate: valid_passes >= 1 (per PRD Section 3, Step 8)
+  - Filtering: minimum trades threshold (default: ONTESTER_MIN_TRADES = 10)
+  - Uses MT5XMLParser from ea_stress/mt5/parser.py
+  - Forward merge: auto-detects _fwd.xml suffix or accepts explicit path
+  - Stores both back and forward metrics separately per PRD requirement
+  - _optimization_pass_to_dict() helper converts OptimizationPass to PRD Section 6.3 format
+  - Pass format includes: result, profit, profit_factor, max_drawdown_pct, total_trades, win_rate, sharpe_ratio, expected_payoff, recovery_factor
+  - Separate "back" and "forward" metrics objects per PRD Section 6.3
+  - "params" object includes Pass number, Back Result, Forward Result (if available), and all parameter values
+  - Source field set to "pass1" to distinguish from Pass 2 results
+  - Counts total passes (all) and valid passes (meeting min_trades threshold)
+  - validate_parse_results() convenience function
+  - passed_gate() method for gate evaluation (valid_passes >= 1)
+  - to_dict() serialization for JSON persistence
+  - Error handling: XML file not found, parsing exceptions, invalid XML
+  - Comprehensive test suite (tests/test_step08_parse.py)
+  - All 14 tests passing: gate pass/fail, successful parsing, no valid passes, forward merge (explicit/auto-detect), exception handling, custom thresholds, config defaults, serialization
+  - Phase 4 Step 8 complete
