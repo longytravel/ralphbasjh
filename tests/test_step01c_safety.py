@@ -246,8 +246,12 @@ void OnTick() {}
             self.assertIn('double EAStressSafety_PipSize()', content)
             self.assertIn('bool EAStressSafety_IsSpreadOk()', content)
             self.assertIn('ulong EAStressSafety_MaxDeviationPoints()', content)
-            self.assertIn('bool EAStressSafety_OrderSend(', content)
-            self.assertIn('bool EAStressSafety_OrderSendAsync(', content)
+            self.assertIn('bool EAStressSafety_OrderSend_Impl(', content)
+            self.assertIn('bool EAStressSafety_OrderSendAsync_Impl(', content)
+
+            # Check macro overrides
+            self.assertIn('#define OrderSend EAStressSafety_OrderSend_Impl', content)
+            self.assertIn('#define OrderSendAsync EAStressSafety_OrderSendAsync_Impl', content)
 
             # Check macros
             self.assertIn('#define STRESS_TEST_MODE true', content)

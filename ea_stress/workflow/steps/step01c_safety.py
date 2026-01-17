@@ -146,7 +146,7 @@ ulong EAStressSafety_MaxDeviationPoints()
 }}
 
 // Safe OrderSend wrapper with spread and slippage checks
-bool EAStressSafety_OrderSend(MqlTradeRequest &request, MqlTradeResult &result)
+bool EAStressSafety_OrderSend_Impl(MqlTradeRequest &request, MqlTradeResult &result)
 {{
    // Check spread before trading
    if(!EAStressSafety_IsSpreadOk())
@@ -160,12 +160,12 @@ bool EAStressSafety_OrderSend(MqlTradeRequest &request, MqlTradeResult &result)
    if(request.deviation == 0)
       request.deviation = EAStressSafety_MaxDeviationPoints();
 
-   // Execute trade
-   return OrderSend(request, result);
+   // Execute trade (call original OrderSend via direct MQL API)
+   return ::OrderSend(request, result);
 }}
 
-// Async version (rarely used, but include for completeness)
-bool EAStressSafety_OrderSendAsync(MqlTradeRequest &request, MqlTradeResult &result)
+// Async version
+bool EAStressSafety_OrderSendAsync_Impl(MqlTradeRequest &request, MqlTradeResult &result)
 {{
    if(!EAStressSafety_IsSpreadOk())
    {{
@@ -177,8 +177,12 @@ bool EAStressSafety_OrderSendAsync(MqlTradeRequest &request, MqlTradeResult &res
    if(request.deviation == 0)
       request.deviation = EAStressSafety_MaxDeviationPoints();
 
-   return OrderSendAsync(request, result);
+   return ::OrderSendAsync(request, result);
 }}
+
+// Macro overrides to enforce safety checks
+#define OrderSend EAStressSafety_OrderSend_Impl
+#define OrderSendAsync EAStressSafety_OrderSendAsync_Impl
 
 // File operation blockers for stress test mode
 #define STRESS_TEST_MODE true

@@ -166,17 +166,19 @@ Started: Building EA Stress Test System from PRD
 - Implemented Step 1C: Safety guards injection (ea_stress/workflow/steps/step01c_safety.py):
   - SafetyResult dataclass with injection status tracking
   - inject_safety_guards() function for safety parameter injection
-  - Injected parameters: EAStressSafety_MaxSpreadPips, EAStressSafety_MaxSlippagePips
-  - Safety functions: PipSize(), IsSpreadOk(), MaxDeviationPoints(), OrderSend(), OrderSendAsync()
-  - Macro overrides for file operations: FileOpen, FileWrite, FileDelete, WebRequest
-  - STRESS_TEST_MODE define
-  - Status: injected, already_present, skipped, conflict, error
-  - Conflict detection for existing safety parameters and functions
-  - Detects existing MaxSpread/MaxSlippage params, IsSpreadOk function, OrderSend macro
+  - Injected parameters: EAStressSafety_MaxSpreadPips (default 3.0), EAStressSafety_MaxSlippagePips (default 3.0)
+  - Safety functions: PipSize(), IsSpreadOk(), MaxDeviationPoints()
+  - OrderSend/OrderSendAsync wrapper functions (EAStressSafety_OrderSend_Impl, EAStressSafety_OrderSendAsync_Impl)
+  - Macro overrides: #define OrderSend EAStressSafety_OrderSend_Impl, #define OrderSendAsync EAStressSafety_OrderSendAsync_Impl
+  - File/web blocking defines: FileOpen, FileWrite, FileDelete, WebRequest (per PRD Section 3, Step 1C)
+  - STRESS_TEST_MODE define set to true
+  - Status values: injected, already_present, conflict, error
+  - System marker (EA_STRESS_SAFETY_INJECTED) for duplicate injection detection
+  - Conflict detection for existing MaxSpread/MaxSlippage params, IsSpreadOk function, OrderSend macro
   - Comment-aware conflict detection (ignores code in // and /* */ comments)
-  - Preserves original EA structure and Unicode content
   - Smart injection point detection (before first function or OnInit)
-  - Configurable max spread and slippage values (defaults: 3.0 pips)
+  - Preserves original EA structure and Unicode content
   - validate_safety_injection() convenience function
+  - Configurable max spread and slippage values (defaults: 3.0 pips)
   - Comprehensive test suite (tests/test_step01c_safety.py)
   - All 15 tests passing

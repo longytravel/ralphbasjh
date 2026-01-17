@@ -19,7 +19,7 @@ Build a complete 14-step workflow engine that validates MetaTrader 5 Expert Advi
 ## Phase 3: Core Workflow Steps 1-5
 - [x] Step 1: Load EA (file validation)
 - [x] Step 1B: OnTester function injection with R^2 calculation
-- [ ] Step 1C: Safety guards injection (spread/slippage controls)
+- [x] Step 1C: Safety guards injection (spread/slippage controls)
 - [ ] Step 2: Compile EA using MetaEditor64
 - [ ] Step 3: Extract parameters (regex parser for input declarations)
 - [ ] Step 4: Parameter analysis (LLM offline JSON flow)
