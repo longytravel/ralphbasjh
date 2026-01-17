@@ -161,3 +161,22 @@ Started: Building EA Stress Test System from PRD
   - validate_ontester_injection() convenience function
   - Comprehensive test suite (tests/test_step01b_ontester.py)
   - All 12 tests passing
+
+## Iteration 11
+- Implemented Step 1C: Safety guards injection (ea_stress/workflow/steps/step01c_safety.py):
+  - SafetyResult dataclass with injection status tracking
+  - inject_safety_guards() function for safety parameter injection
+  - Injected parameters: EAStressSafety_MaxSpreadPips, EAStressSafety_MaxSlippagePips
+  - Safety functions: PipSize(), IsSpreadOk(), MaxDeviationPoints(), OrderSend(), OrderSendAsync()
+  - Macro overrides for file operations: FileOpen, FileWrite, FileDelete, WebRequest
+  - STRESS_TEST_MODE define
+  - Status: injected, already_present, skipped, conflict, error
+  - Conflict detection for existing safety parameters and functions
+  - Detects existing MaxSpread/MaxSlippage params, IsSpreadOk function, OrderSend macro
+  - Comment-aware conflict detection (ignores code in // and /* */ comments)
+  - Preserves original EA structure and Unicode content
+  - Smart injection point detection (before first function or OnInit)
+  - Configurable max spread and slippage values (defaults: 3.0 pips)
+  - validate_safety_injection() convenience function
+  - Comprehensive test suite (tests/test_step01c_safety.py)
+  - All 15 tests passing

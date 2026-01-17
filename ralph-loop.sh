@@ -5,7 +5,7 @@
 set -e
 
 # Configuration
-MAX_ITERATIONS=${MAX_ITERATIONS:-20}
+MAX_ITERATIONS=${MAX_ITERATIONS:-50}
 COMPLETION_MARKER="<promise>COMPLETE</promise>"
 
 # Colors for output
@@ -55,18 +55,25 @@ for i in $(seq 1 $MAX_ITERATIONS); do
 TASK: $TASK
 
 INSTRUCTIONS:
-1. Read plan.md (if exists) and progress.txt to understand context.
-2. Pick the NEXT single incomplete task and implement it fully.
-3. Run any relevant tests/typechecks to verify your work.
-4. If successful:
-   - Update progress.txt with what you completed
+1. Read plan.md to find the NEXT unchecked task (marked with '- [ ]').
+2. Read progress.txt to see what's already been done.
+3. **CRITICAL: Read PRD.md for implementation details** - use the exact:
+   - Data models and JSON schemas (Section 6)
+   - Configuration parameters (Section 5 and 12)
+   - Step specifications (Section 3)
+   - Gate thresholds and formulas (Section 4)
+4. Implement the task fully, following PRD specs precisely.
+5. Run tests to verify your work.
+6. If successful:
+   - Update plan.md: change '- [ ]' to '- [x]' for the completed task
+   - Update progress.txt with iteration details
    - Commit changes with message: 'ralph: [brief description]'
-5. IMPORTANT: Only do ONE task per iteration, then exit.
-6. If ALL tasks are complete, output exactly: $COMPLETION_MARKER
+7. IMPORTANT: Only do ONE task per iteration, then exit.
+8. If ALL tasks in plan.md are checked '[x]', output exactly: $COMPLETION_MARKER
 
-Current files for context: @plan.md @progress.txt @PRD.md
+Files for context: @plan.md @progress.txt @PRD.md
 
-IMPORTANT: Always refer to PRD.md for detailed specifications, data models, and requirements."
+CRITICAL: PRD.md is your source of truth. Every implementation must match the PRD specifications exactly - data models, formulas, thresholds, file structures, etc."
 
     # Run Claude Code
     echo -e "${YELLOW}Running Claude Code...${NC}"
