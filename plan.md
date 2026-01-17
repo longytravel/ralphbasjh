@@ -23,7 +23,7 @@ Build a complete 14-step workflow engine that validates MetaTrader 5 Expert Advi
 - [x] Step 2: Compile EA using MetaEditor64
 - [x] Step 3: Extract parameters (regex parser for input declarations)
 - [x] Step 4: Parameter analysis (LLM offline JSON flow)
-- [ ] Step 5: Validate trades (run backtest with wide params)
+- [x] Step 5: Validate trades (run backtest with wide params)
 
 ## Phase 4: Optimization Loop (Steps 6-8)
 - [ ] Step 6: Create optimization INI (Pass 1 - Wide)
