@@ -41,3 +41,16 @@ Started: Building EA Stress Test System from PRD
   - Error and warning tracking
   - Progress summary generation
   - Verified serialization/deserialization with tests
+
+## Iteration 4
+- Implemented workflow state transitions (ea_stress/models.py):
+  - State machine with valid transition rules
+  - PENDING -> RUNNING -> COMPLETED/FAILED/PAUSED
+  - PAUSED -> RUNNING/FAILED
+  - FAILED -> RUNNING (retry support)
+  - COMPLETED as terminal state
+  - Convenience methods: start(), pause(), resume(), complete(), fail(), retry()
+  - Automatic timestamp updates on state changes
+  - Invalid transition detection with warnings
+  - Comprehensive test suite (tests/test_state_transitions.py)
+  - All tests passing: valid transitions, invalid transitions, failure/retry, persistence

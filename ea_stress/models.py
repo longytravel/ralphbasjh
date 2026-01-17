@@ -248,3 +248,68 @@ class WorkflowState:
             'errors': len(self.errors),
             'warnings': len(self.warnings)
         }
+
+    def transition_to(self, new_status: WorkflowStatus) -> bool:
+        """
+        Transition workflow to a new status with validation.
+
+        Returns True if transition is valid and executed, False otherwise.
+
+        Valid transitions:
+        - PENDING -> RUNNING
+        - RUNNING -> COMPLETED, FAILED, PAUSED
+        - PAUSED -> RUNNING, FAILED
+        - FAILED -> RUNNING (retry)
+        - COMPLETED -> (terminal state, no transitions)
+        """
+        valid_transitions = {
+            WorkflowStatus.PENDING: {WorkflowStatus.RUNNING},
+            WorkflowStatus.RUNNING: {WorkflowStatus.COMPLETED, WorkflowStatus.FAILED, WorkflowStatus.PAUSED},
+            WorkflowStatus.PAUSED: {WorkflowStatus.RUNNING, WorkflowStatus.FAILED},
+            WorkflowStatus.FAILED: {WorkflowStatus.RUNNING},  # Allow retry
+            WorkflowStatus.COMPLETED: set()  # Terminal state
+        }
+
+        if new_status not in valid_transitions.get(self.status, set()):
+            self.add_warning(
+                f"Invalid state transition: {self.status.value} -> {new_status.value}"
+            )
+            return False
+
+        old_status = self.status
+        self.status = new_status
+
+        # Update timestamps based on transition
+        if new_status == WorkflowStatus.RUNNING and not self.started_at:
+            self.started_at = datetime.utcnow().isoformat()
+
+        if new_status in (WorkflowStatus.COMPLETED, WorkflowStatus.FAILED):
+            self.completed_at = datetime.utcnow().isoformat()
+
+        return True
+
+    def start(self) -> bool:
+        """Start the workflow (PENDING -> RUNNING)."""
+        return self.transition_to(WorkflowStatus.RUNNING)
+
+    def pause(self) -> bool:
+        """Pause the workflow (RUNNING -> PAUSED)."""
+        return self.transition_to(WorkflowStatus.PAUSED)
+
+    def resume(self) -> bool:
+        """Resume the workflow (PAUSED -> RUNNING)."""
+        return self.transition_to(WorkflowStatus.RUNNING)
+
+    def complete(self) -> bool:
+        """Mark workflow as completed (RUNNING -> COMPLETED)."""
+        return self.transition_to(WorkflowStatus.COMPLETED)
+
+    def fail(self, error: Optional[str] = None) -> bool:
+        """Mark workflow as failed (RUNNING/PAUSED -> FAILED)."""
+        if error:
+            self.add_error(error)
+        return self.transition_to(WorkflowStatus.FAILED)
+
+    def retry(self) -> bool:
+        """Retry a failed workflow (FAILED -> RUNNING)."""
+        return self.transition_to(WorkflowStatus.RUNNING)
