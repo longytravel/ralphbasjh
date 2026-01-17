@@ -241,3 +241,9 @@ Started: Building EA Stress Test System from PRD
   - All 6 tests passing: type normalization, simple parameters, sinput, gate conditions
   - Per PRD Section 3: workflow pauses with AWAITING_PARAM_ANALYSIS after this step
   - Phase 3 Step 3 complete
+
+## Iteration 13 (Bug Fix)
+- Fixed Step 3: Extract Parameters multiline declaration handling (ea_stress/workflow/steps/step03_extract.py):
+  - Fixed join_multiline_declarations() to properly detect 'input' and 'sinput' keywords both with and without trailing space
+  - Now handles both `input int Param` and multiline cases like `input\nint\nParam`
+  - All 6 tests passing after fix
