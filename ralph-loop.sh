@@ -64,7 +64,9 @@ INSTRUCTIONS:
 5. IMPORTANT: Only do ONE task per iteration, then exit.
 6. If ALL tasks are complete, output exactly: $COMPLETION_MARKER
 
-Current files for context: @plan.md @progress.txt"
+Current files for context: @plan.md @progress.txt @PRD.md
+
+IMPORTANT: Always refer to PRD.md for detailed specifications, data models, and requirements."
 
     # Run Claude Code
     echo -e "${YELLOW}Running Claude Code...${NC}"
