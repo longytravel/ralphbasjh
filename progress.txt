@@ -54,3 +54,18 @@ Started: Building EA Stress Test System from PRD
   - Invalid transition detection with warnings
   - Comprehensive test suite (tests/test_state_transitions.py)
   - All tests passing: valid transitions, invalid transitions, failure/retry, persistence
+
+## Iteration 5
+- Implemented MT5 terminal discovery (ea_stress/mt5/terminal.py):
+  - MT5Installation dataclass with terminal and data paths
+  - Autodiscovery of MT5 installations in common locations
+  - Searches Program Files, AppData, and broker-specific paths
+  - MT5Discovery class with find_terminals() method
+  - Terminal path validation (validate_terminal)
+  - Resolution with priority: explicit path -> env var -> autodiscovery
+  - MetaEditor64.exe path detection with 32-bit fallback
+  - Version detection support (from file properties)
+  - get_terminal_info() helper for terminal details
+  - Handles multiple installations with clear error messages
+  - Comprehensive test suite (tests/test_terminal_discovery.py)
+  - All 18 tests passing
