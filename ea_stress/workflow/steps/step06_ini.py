@@ -297,26 +297,26 @@ def _timeframe_to_minutes(timeframe: str) -> int:
     """
     timeframe = timeframe.upper()
 
-    # Minute timeframes
-    if timeframe.startswith("M"):
-        return int(timeframe[1:])
+    # Monthly (check first before M check)
+    if timeframe == "MN1":
+        return 43200
+
+    # Weekly
+    if timeframe == "W1":
+        return 10080
+
+    # Daily
+    if timeframe == "D1":
+        return 1440
 
     # Hour timeframes
     if timeframe.startswith("H"):
         hours = int(timeframe[1:])
         return hours * 60
 
-    # Daily
-    if timeframe == "D1":
-        return 1440
-
-    # Weekly
-    if timeframe == "W1":
-        return 10080
-
-    # Monthly (approximation)
-    if timeframe == "MN1":
-        return 43200
+    # Minute timeframes
+    if timeframe.startswith("M"):
+        return int(timeframe[1:])
 
     # Default to 60 (H1) if unknown
     return 60
