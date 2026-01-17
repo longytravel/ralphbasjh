@@ -12,3 +12,20 @@ Started: Building EA Stress Test System from PRD
   - runs/ with subdirs: logs, analysis, dashboards, leaderboard, boards, reports, workflows
   - tests/
   - reports/templates/
+
+## Iteration 2
+- Created configuration system (ea_stress/config.py):
+  - All settings from PRD Section 12 implemented
+  - Backtest settings (periods, models, deposits)
+  - Gate thresholds (profit factor, drawdown, trades, Monte Carlo)
+  - Safety parameters (spread/slippage limits)
+  - Risk metrics targets (Sharpe, Sortino, Calmar, recovery)
+  - Scoring system (Go Live Score weights and ranges)
+  - Automation settings (LLM, multi-pair, stress testing)
+  - Stress testing configuration (windows, models, overlays)
+  - Optimization parameters
+  - Parameter stability and correlation settings
+  - Path constants for all output directories
+  - Session windows for stat explorer
+  - Workflow status values
+  - OnTester formula constants
