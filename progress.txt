@@ -84,3 +84,24 @@ Started: Building EA Stress Test System from PRD
   - compile_ea() convenience function
   - Comprehensive test suite (tests/test_compiler.py)
   - All 19 tests passing
+
+## Iteration 7
+- Implemented backtest runner with INI file generation (ea_stress/mt5/tester.py):
+  - BacktestConfig dataclass for test configuration
+  - BacktestResult dataclass for execution results
+  - OptimizationMode enum (disabled, slow complete, genetic, all symbols)
+  - OptimizationCriterion enum (balance, profit factor, custom OnTester, etc.)
+  - ForwardMode enum (disabled, period-based, date-based)
+  - MT5Tester class for backtest execution
+  - Auto-detection of MT5 data directory (portable or standard install)
+  - INI file generation with all settings (dates, model, deposit, leverage, etc.)
+  - Expert input parameters support (fixed values)
+  - Optimization ranges support (start, step, stop, optimize flag)
+  - Forward testing configuration
+  - Subprocess execution of terminal64.exe with INI file
+  - Report file discovery and validation (HTML and XML)
+  - Timeout handling and error reporting
+  - run_optimization() wrapper for optimization runs
+  - run_backtest() convenience function
+  - Comprehensive test suite (tests/test_tester.py)
+  - All 17 tests passing
