@@ -4,21 +4,21 @@
 Build a complete 14-step workflow engine that validates MetaTrader 5 Expert Advisors through optimization, backtesting, Monte Carlo simulation, and LLM-guided improvements.
 
 ## Phase 1: Project Foundation
-- [ ] Create project structure (src/, tests/, runs/, reports/)
-- [ ] Set up configuration system with all settings from PRD Section 12
-- [ ] Create workflow state model (JSON persistence)
-- [ ] Implement workflow status enum and state transitions
+- [x] Create project structure (src/, tests/, runs/, reports/)
+- [x] Set up configuration system with all settings from PRD Section 12
+- [x] Create workflow state model (JSON persistence)
+- [x] Implement workflow status enum and state transitions
 
 ## Phase 2: MT5 Integration
-- [ ] Implement MT5 terminal discovery (autodiscover installations)
-- [ ] Create MetaEditor compilation wrapper
-- [ ] Build backtest runner with INI file generation
-- [ ] Build optimization runner
-- [ ] Create MT5 XML report parser (Excel Spreadsheet ML format)
+- [x] Implement MT5 terminal discovery (autodiscover installations)
+- [x] Create MetaEditor compilation wrapper
+- [x] Build backtest runner with INI file generation
+- [x] Build optimization runner
+- [x] Create MT5 XML report parser (Excel Spreadsheet ML format)
 
 ## Phase 3: Core Workflow Steps 1-5
-- [ ] Step 1: Load EA (file validation)
-- [ ] Step 1B: OnTester function injection with R^2 calculation
+- [x] Step 1: Load EA (file validation)
+- [x] Step 1B: OnTester function injection with R^2 calculation
 - [ ] Step 1C: Safety guards injection (spread/slippage controls)
 - [ ] Step 2: Compile EA using MetaEditor64
 - [ ] Step 3: Extract parameters (regex parser for input declarations)

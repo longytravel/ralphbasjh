@@ -123,3 +123,41 @@ Started: Building EA Stress Test System from PRD
   - Comprehensive test suite (tests/test_parser.py)
   - All 8 tests passing
   - Phase 2 (MT5 Integration) now complete
+
+## Iteration 9
+- Implemented Step 1: Load EA (ea_stress/workflow/steps/step01_load.py):
+  - LoadResult dataclass with file validation status
+  - load_ea() function for EA source file validation
+  - File existence and accessibility checks
+  - File type validation (.mq5 or .mq4)
+  - File size and readability verification
+  - Absolute path resolution
+  - Gate condition: file_exists == 1
+  - passed_gate() method for gate evaluation
+  - to_dict() method for JSON serialization
+  - validate_ea_path() convenience helper
+  - Robust error handling with detailed messages
+  - Support for Unicode content and paths with spaces
+  - Case-insensitive extension matching
+  - Comprehensive test suite (tests/test_step01_load.py)
+  - All 15 tests passing
+
+## Iteration 10
+- Implemented Step 1B: OnTester function injection (ea_stress/workflow/steps/step01b_ontester.py):
+  - OnTesterResult dataclass with injection status tracking
+  - inject_ontester() function for custom OnTester injection
+  - OnTester formula: Score = Profit * R^2 * sqrt(trades/100) * DD_factor * PF_bonus
+  - R^2 calculation via linear regression on equity curve
+  - DD_factor: soft drawdown penalty = 1 / (1 + maxDD / 50)
+  - PF_bonus: if PF > 1.5, multiply by (1 + (PF - 1.5) * 0.03)
+  - Hardcoded thresholds: trades < 10 -> -1000, profit <= 0 -> -500
+  - Fallback formula for < 10 deals (without R^2)
+  - System marker (EA_STRESS_ONTESTER_INJECTED) for conflict detection
+  - Status: injected, already_present, conflict, error
+  - Conflict detection for external OnTester functions
+  - Preserves original EA (creates modified copy with _ontester suffix)
+  - CalculateRSquared() helper with full linear regression
+  - Unicode support and error handling
+  - validate_ontester_injection() convenience function
+  - Comprehensive test suite (tests/test_step01b_ontester.py)
+  - All 12 tests passing
