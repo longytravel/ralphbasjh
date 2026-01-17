@@ -29,3 +29,15 @@ Started: Building EA Stress Test System from PRD
   - Session windows for stat explorer
   - Workflow status values
   - OnTester formula constants
+
+## Iteration 3
+- Created workflow state model (ea_stress/models.py):
+  - WorkflowStatus and StepStatus enums
+  - StepResult dataclass for individual step tracking
+  - OptimizationPass dataclass for optimization tracking
+  - WorkflowState dataclass with complete state structure
+  - JSON persistence (save/load methods)
+  - Step management (update_step, get_step_status, is_step_completed)
+  - Error and warning tracking
+  - Progress summary generation
+  - Verified serialization/deserialization with tests
