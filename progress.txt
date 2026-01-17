@@ -218,22 +218,26 @@ Started: Building EA Stress Test System from PRD
   - Uses mocking for MT5Installation to avoid requiring real MT5 installation during tests
 
 ## Iteration 13
-- Verified Step 3: Extract Parameters (ea_stress/workflow/steps/step03_extract.py):
+- Implemented Step 3: Extract Parameters (ea_stress/workflow/steps/step03_extract.py):
   - Parameter dataclass with name, type, base_type, default, comment, line, optimizable
-  - ExtractResult dataclass with params_found, optimizable_count, parameters list, usage_map
+  - ExtractResult dataclass with params_found, optimizable_count, parameters list, usage_map, gate_passed
   - Gate: params_found >= 1 (per PRD Section 3, Step 3)
-  - Type normalization: int/uint/long/etc -> int, double/float -> double, ENUM_* -> enum
-  - Regex pattern per PRD: (sinput|input)\s+([\w\s]+?)\s+(\w+)\s*(?:=\s*([^;/]+?))?\s*;(?:\s*//\s*(.*))?
+  - Type normalization per PRD: int/uint/long/etc -> int, double/float -> double, ENUM_* -> enum
+  - Regex pattern per PRD: (sinput|input)\s+([\w\s]+?)\s+(\w+)\s*(?:=\s*([^;/]+?))?\s*;
   - Multi-line declaration joining until semicolon
-  - Comment removal (// and /* */) while preserving inline comments for extraction
-  - #if 0 ... #endif block removal
+  - Comment removal (// line and /* */ block) while preserving for inline comment extraction
+  - #if 0 ... #endif block removal per PRD
   - Optimizable detection: input (not sinput) AND numeric (int/double) AND not EAStressSafety_*
   - Parameter usage map: tracks function names and code snippets where each param is referenced
+  - normalize_type() for type mapping, is_numeric_type() for optimizable check
+  - remove_comments() and remove_conditional_blocks() helpers
+  - join_multiline_declarations() for handling multi-line input declarations
   - parse_parameters() function for regex-based extraction
-  - build_usage_map() function for finding parameter references
-  - extract_parameters() main entry point
+  - build_usage_map() function for finding parameter references in EA code
+  - extract_parameters() main entry point with error handling
   - validate_extraction() convenience function
+  - to_dict() serialization for JSON persistence
   - Comprehensive test suite (tests/test_step03_extract.py)
   - All 6 tests passing: type normalization, simple parameters, sinput, gate conditions
-  - File was already implemented from previous iteration, added tests and verification
+  - Per PRD Section 3: workflow pauses with AWAITING_PARAM_ANALYSIS after this step
   - Phase 3 Step 3 complete
