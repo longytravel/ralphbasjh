@@ -29,8 +29,8 @@ Build a complete 14-step workflow engine that validates MetaTrader 5 Expert Advi
 - [x] Step 6: Create optimization INI (Pass 1 - Wide)
 - [x] Step 7: Run optimization (genetic algorithm)
 - [x] Step 8: Parse optimization results
-- [ ] Step 8B: Stat Explorer (session/hour/DOW analysis)
-- [ ] Step 8C: LLM improvement proposal generation
+- [x] Step 8B: Stat Explorer (session/hour/DOW analysis)
+- [x] Step 8C: LLM improvement proposal generation
 - [ ] Step 8D: Manual review and patch application
 - [ ] Step 8E: Recompile and re-validate patched EA
 - [ ] Step 8F: Create optimization INI (Pass 2 - Refined)
