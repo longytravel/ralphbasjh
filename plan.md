@@ -31,7 +31,7 @@ Build a complete 14-step workflow engine that validates MetaTrader 5 Expert Advi
 - [x] Step 8: Parse optimization results
 - [x] Step 8B: Stat Explorer (session/hour/DOW analysis)
 - [x] Step 8C: LLM improvement proposal generation
-- [ ] Step 8D: Manual review and patch application
+- [x] Step 8D: Manual review and patch application
 - [ ] Step 8E: Recompile and re-validate patched EA
 - [ ] Step 8F: Create optimization INI (Pass 2 - Refined)
 - [ ] Step 8G: Run optimization Pass 2
